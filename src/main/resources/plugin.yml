@@ -1,0 +1,26 @@
+name: DCHeads
+main: main.java.dk.doggycraft.dcheads.Heads
+author: DoggyCraft
+version: ${project.version}
+api-version: 1.13
+description: A plugin which creates heads easily from within the game itself
+softdepend: [Vault]
+website: https://github.com/DoggyCraftDK/DCHeads
+commands:
+  heads:
+    description: Controls the DCHeads system
+    usage: /heads
+    aliases: gethead
+permissions:
+    heads.*:
+        description: Gives the Player access to control the DCHeads system
+        default: false
+        children:
+            heads.gethead: true
+            heads.reload: false
+    heads.gethead:
+        description: Allows the Player to get a head using the DCHeads system
+        default: false
+    heads.reload:
+        description: Allows the Player to reload the DCHeads system
+        default: false
