@@ -1,7 +1,6 @@
 package main.java.dk.doggycraft.dcheads;
 
 import java.util.logging.Logger;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -111,6 +110,8 @@ public class Heads extends JavaPlugin
 		this.headsManager.load();
 		this.freshCoalAPI.load();
 		this.headGUIManager.load();
+		
+		getServer().getPluginManager().registerEvents(new HeadGUIManager(this), this);
 	}
 
 	public void onDisable()
@@ -120,7 +121,6 @@ public class Heads extends JavaPlugin
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
 	{
-		this.logDebug("Wow, there is a command, redirecting to Commands");
 		return commands.onCommand(sender, cmd, label, args);
 	}
 }

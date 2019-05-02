@@ -53,7 +53,10 @@ public class FreshCoalAPI
 					// let's do stuff
 					String ServerResponse = EntityUtils.toString(entity);
 					if(ServerResponse.contains("Minimum length is 3")) {
-						// Do nothing
+						return null;
+					}
+					else if(ServerResponse.contains("No results matching your search were found")) {
+						return null;
 					}
 					else {
 						// Converting output to JSON

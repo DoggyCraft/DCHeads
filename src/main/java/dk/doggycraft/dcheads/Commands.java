@@ -20,8 +20,6 @@ public class Commands
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
 	{
 		Player player = null;
-		plugin.logDebug("we're in Commands");
-		plugin.logDebug("cmd.getname is: " + cmd.getName());
 
 		if ((sender instanceof Player))
 		{
@@ -30,8 +28,7 @@ public class Commands
 
 		if (player == null)
 		{
-			plugin.logDebug("player is null");
-			if ((cmd.getName().equalsIgnoreCase("heads")) || (cmd.getName().equalsIgnoreCase("gethead")))
+			if ((cmd.getName().equalsIgnoreCase("heads")) || (cmd.getName().equalsIgnoreCase("gethead")) || (cmd.getName().equalsIgnoreCase("h")))
 			{
 				if (args.length == 1)
 				{
@@ -47,14 +44,10 @@ public class Commands
 
 			return true;
 		}
-		plugin.logDebug("not a console");
-		if ((cmd.getName().equalsIgnoreCase("heads")) || (cmd.getName().equalsIgnoreCase("gethead")))
+		if ((cmd.getName().equalsIgnoreCase("heads")) || (cmd.getName().equalsIgnoreCase("gethead")) || (cmd.getName().equalsIgnoreCase("h")))
 		{
-			plugin.logDebug("ok, so one of the commands were heads or gethead");
-			plugin.logDebug("args length is: " + args.length);
 			if (args.length == 0)
 			{
-				plugin.logDebug("no args");
 				commandHelp(sender);
 				return true;
 			}
@@ -85,7 +78,7 @@ public class Commands
 			}
 			if (args.length == 2)
 			{
-				if (args[0].equalsIgnoreCase("code"))
+				if ((args[0].equalsIgnoreCase("code")) || (args[0].equalsIgnoreCase("c")))
 				{
 					if ((!player.isOp()) && (!player.hasPermission("heads.gethead")))
 					{
@@ -95,7 +88,7 @@ public class Commands
 					commandHead(sender, args[1]);
 					return true;
 				}
-				if (args[0].equalsIgnoreCase("search"))
+				if ((args[0].equalsIgnoreCase("search")) || (args[0].equalsIgnoreCase("s")))
 				{
 					if ((!player.isOp()) && (!player.hasPermission("heads.gethead")))
 					{
@@ -103,6 +96,16 @@ public class Commands
 					}
 
 					commandSearchHead(sender, args[1]);
+					return true;
+				}
+				if ((args[0].equalsIgnoreCase("player")) || (args[0].equalsIgnoreCase("p")))
+				{
+					if ((!player.isOp()) && (!player.hasPermission("heads.gethead")))
+					{
+						return false;
+					}
+
+					commandGetPlayerHead(sender, args[1]);
 					return true;
 				}
 			}
@@ -135,8 +138,9 @@ public class Commands
 		sender.sendMessage(ChatColor.AQUA + "/heads" + ChatColor.WHITE + " - Info om pluginnet");
 		if ((sender.isOp()) || (sender.hasPermission("heads.gethead")))
 		{
-			sender.sendMessage(ChatColor.AQUA + "/heads code <base64 værdi på hoved>" + ChatColor.WHITE + " - Får et hoved ved at bruge dets base64 værdi");
 			sender.sendMessage(ChatColor.AQUA + "/heads search <søgeord>" + ChatColor.WHITE + " - Får en liste af hoveder ved at søge");
+			sender.sendMessage(ChatColor.AQUA + "/heads code <base64 værdi på hoved>" + ChatColor.WHITE + " - Får et hoved ved at bruge dets base64 værdi");
+			sender.sendMessage(ChatColor.AQUA + "/heads player <username>" + ChatColor.WHITE + " - Får en spillers hoved");
 		}
 		if ((sender.isOp()) || (sender.hasPermission("heads.reload")))
 		{
@@ -153,7 +157,18 @@ public class Commands
 		if ((sender.isOp()) || (sender.hasPermission("heads.gethead")))
 		{
 			plugin.getHeadsManager().giveHeadToPlayer(player, headBase64);
-			sender.sendMessage(ChatColor.BLUE + "Her er dit hoved!");
+		}
+
+		return true;
+	}
+	
+	private boolean commandGetPlayerHead(CommandSender sender, String playerName)
+	{
+		Player player = (Player)sender;
+		
+		if ((sender.isOp()) || (sender.hasPermission("heads.gethead")))
+		{
+			plugin.getHeadsManager().giveHeadToPlayer(player, plugin.getHeadsManager().getPlayerHead(playerName, playerName));
 		}
 
 		return true;
@@ -169,12 +184,11 @@ public class Commands
 			if (searchKeyword.length() < 3)
 			{
 				sender.sendMessage(ChatColor.RED + "Brug venligst 3 eller flere bogstaver i din søgning...");
+				return true;
 			}
-			//sender.sendMessage(ChatColor.BLUE + "Finder hoveder med dit søgeord...");
-			Map<Integer, List<String>> headMap = plugin.getFreshCoalAPI().getHeadsOnSite(searchKeyword);
-			
-			plugin.getHeadGUIManager().newHeadGUI(headMap, searchKeyword, player);
-			//sender.sendMessage(ChatColor.BLUE + "Her er dine hoveder!");
+			else {
+				plugin.getHeadGUIManager().newHeadGUI(player, searchKeyword);
+			}
 		}
 
 		return true;

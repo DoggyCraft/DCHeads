@@ -3,6 +3,7 @@ main: main.java.dk.doggycraft.dcheads.Heads
 author: DoggyCraft
 version: ${project.version}
 api-version: 1.13
+load: POSTWORLD
 description: A plugin which creates heads easily from within the game itself
 softdepend: [Vault]
 website: https://github.com/DoggyCraftDK/DCHeads
@@ -10,7 +11,7 @@ commands:
   heads:
     description: Controls the DCHeads system
     usage: /heads
-    aliases: gethead
+    aliases: [gethead, h]
 permissions:
     heads.*:
         description: Gives the Player access to control the DCHeads system
