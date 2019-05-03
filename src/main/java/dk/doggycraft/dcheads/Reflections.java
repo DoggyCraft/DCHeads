@@ -1,4 +1,4 @@
-package main.java.dk.doggycraft.dcheads;
+package dk.doggycraft.dcheads;
 
 import org.bukkit.Bukkit;
 

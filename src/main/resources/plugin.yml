@@ -1,5 +1,5 @@
 name: DCHeads
-main: main.java.dk.doggycraft.dcheads.Heads
+main: dk.doggycraft.dcheads.Heads
 author: DoggyCraft
 version: ${project.version}
 api-version: 1.13
