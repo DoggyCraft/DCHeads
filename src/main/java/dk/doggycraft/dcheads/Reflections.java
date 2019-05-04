@@ -13,26 +13,22 @@ import java.util.regex.Pattern;
  * An utility class that simplifies reflection in Bukkit plugins.
  *
  * @author Kristian
- * Stolen from: https://github.com/TigerHix/Hex-Utils/blob/master/hex/util/Reflections.java
+ * Stolen from: https://github.com/TigerHix/Hex-Utils/blob/master/hex/util/Reflections.java and modified by myself
  */
 public final class Reflections {
 
 	private Heads	plugin	= null;
-
-	Reflections(Heads p)
-	{
-		this.plugin = p;
-	}
-	
     // Deduce the net.minecraft.server.v* package
     private static String OBC_PREFIX = Bukkit.getServer().getClass().getPackage().getName();
     private static String NMS_PREFIX = OBC_PREFIX.replace("org.bukkit.craftbukkit", "net.minecraft.server");
     private static String VERSION = OBC_PREFIX.replace("org.bukkit.craftbukkit", "").replace(".", "");
     // Variable replacement
     private static Pattern MATCH_VARIABLE = Pattern.compile("\\{([^\\}]+)\\}");
-
-    private Reflections() {
-    }
+    
+	Reflections(Heads p)
+	{
+		this.plugin = p;
+	}
 
     /**
      * Expand variables such as "{nms}" and "{obc}" to their corresponding packages.

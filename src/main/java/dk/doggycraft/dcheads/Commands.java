@@ -1,8 +1,5 @@
 package dk.doggycraft.dcheads;
 
-import java.util.List;
-import java.util.Map;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -26,35 +23,25 @@ public class Commands
 			player = (Player) sender;
 		}
 
-		if (player == null)
+
+		if ((cmd.getName().equalsIgnoreCase("heads")) || (cmd.getName().equalsIgnoreCase("gethead")) || (cmd.getName().equalsIgnoreCase("h")))
 		{
-			if ((cmd.getName().equalsIgnoreCase("heads")) || (cmd.getName().equalsIgnoreCase("gethead")) || (cmd.getName().equalsIgnoreCase("h")))
+			if ((args.length == 0) && (player != null))
 			{
-				if (args.length == 1)
+				commandHelp(sender);
+				return true;
+			}
+			else if (args.length == 1)
+			{
+				if (args[0].equalsIgnoreCase("reload"))
 				{
-					if(args[0].equalsIgnoreCase("reload"))
-					{
+					if (player == null) { // If console runs "/prison reload"
 						plugin.reloadSettings();
 						this.plugin.log(this.plugin.getDescription().getFullName() + ": Genindlæst konfiguration.");
 
 						return true;
 					}
-				}
-			}
-
-			return true;
-		}
-		if ((cmd.getName().equalsIgnoreCase("heads")) || (cmd.getName().equalsIgnoreCase("gethead")) || (cmd.getName().equalsIgnoreCase("h")))
-		{
-			if (args.length == 0)
-			{
-				commandHelp(sender);
-				return true;
-			}
-			if (args.length == 1)
-			{
-				if (args[0].equalsIgnoreCase("reload"))
-				{
+					
 					if ((!player.isOp()) && (!player.hasPermission("heads.reload")))
 					{
 						return false;
@@ -64,7 +51,7 @@ public class Commands
 					sender.sendMessage(ChatColor.YELLOW + this.plugin.getDescription().getFullName() + ":" + ChatColor.AQUA + " Genindlæst konfiguration.");
 					return true;
 				}
-				if (args[0].equalsIgnoreCase("help"))
+				if ((args[0].equalsIgnoreCase("help")) && (player != null))
 				{
 					if ((!player.isOp()) && (!player.hasPermission("heads.list")))
 					{
@@ -76,7 +63,7 @@ public class Commands
 					return true;
 				}
 			}
-			if (args.length == 2)
+			else if ((args.length == 2) && (player != null))
 			{
 				if ((args[0].equalsIgnoreCase("code")) || (args[0].equalsIgnoreCase("c")))
 				{
@@ -109,9 +96,8 @@ public class Commands
 					return true;
 				}
 			}
-			else
+			else if (player != null)
 			{
-
 				if (args.length > 3)
 				{
 					sender.sendMessage(ChatColor.RED + "For mange argumenter! Tjek /heads help");

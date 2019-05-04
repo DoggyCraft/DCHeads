@@ -48,17 +48,17 @@ public class HeadGUIManager implements Listener
 		if ((headMap.size()-(45*currentPage)) <= 0) {
 			plugin.logDebug("HeadMap size is 0 for current page, go back to 1");
 			// Create inventory
-			inv = createInventory(inv, 54, 1, newSortedMap(0, 45, headMap), searchKeyword);
+			inv = createInventory(54, 1, newSortedMap(0, 45, headMap), searchKeyword);
 		}
 		else if (headMap.size() <= (45*(currentPage+1))) {
 			plugin.logDebug("Rest of headmap can fit into a new page, create it");
 			// Create inventory
-			inv = createInventory(inv, 54, currentPage+1, newSortedMap((45*currentPage)+1, headMap.size(), headMap), searchKeyword);
+			inv = createInventory(54, currentPage+1, newSortedMap((45*currentPage)+1, headMap.size(), headMap), searchKeyword);
 		}
 		else {
 			plugin.logDebug("It can't fit, crop it and go to next page");
 			// Create inventory
-			inv = createInventory(inv, 54, currentPage+1, newSortedMap((45*currentPage)+1, (45*(currentPage+1)), headMap), searchKeyword);
+			inv = createInventory(54, currentPage+1, newSortedMap((45*currentPage)+1, (45*(currentPage+1)), headMap), searchKeyword);
 		}
 		player.closeInventory();
 		player.openInventory(inv);
@@ -79,17 +79,17 @@ public class HeadGUIManager implements Listener
 			// is headmap under, or equals to 54, if so, just create 1 page
 			if (headMap.size() <= 54)
 			{
-				inv = createInventory(inv, 54, headMap, searchWord);
+				inv = createInventory(54, headMap, searchWord);
 			}
 			else {
 				// Create inventory
-				inv = createInventory(inv, 54, 1, newSortedMap(0, 45, headMap), searchWord);
+				inv = createInventory(54, 1, newSortedMap(0, 45, headMap), searchWord);
 			}
 			player.openInventory(inv);
 		}
 	}
 	
-	public Inventory createInventory(Inventory inv, Integer slots, Integer page, Map<Integer, List<String>> headMap, String searchWord) {
+	public Inventory createInventory(Integer slots, Integer page, Map<Integer, List<String>> headMap, String searchWord) {
 		if (slots > 54) {
 			plugin.logDebug("Over 54 slots defined...");
 			return null;
@@ -98,7 +98,7 @@ public class HeadGUIManager implements Listener
 			plugin.logDebug("Over 45 slots used in headsize...");
 			return null;
 		}
-		inv = plugin.getServer().createInventory(null, slots, "DCHeads - Side nr. " + page + " - " + searchWord);
+		Inventory inv = plugin.getServer().createInventory(null, slots, "DCHeads - Side nr. " + page + " - " + searchWord);
 		// Reading the map
 		plugin.logDebug("Trying to create items... HeadMap Size: " + headMap.size());
 		
@@ -120,7 +120,7 @@ public class HeadGUIManager implements Listener
 		return inv;
 	}
 	
-	public Inventory createInventory(Inventory inv, Integer slots, Map<Integer, List<String>> headMap, String searchWord) {
+	public Inventory createInventory(Integer slots, Map<Integer, List<String>> headMap, String searchWord) {
 		if (slots > 54) {
 			plugin.log("Over 54 slots defined...");
 			return null;
@@ -129,7 +129,7 @@ public class HeadGUIManager implements Listener
 			plugin.log("Over 54 slots used in headsize...");
 			return null;
 		}
-		inv = plugin.getServer().createInventory(null, slots, "DCHeads - " + searchWord);
+		Inventory inv = plugin.getServer().createInventory(null, slots, "DCHeads - " + searchWord);
 		// Reading the map
 		for (int i = 0; i < headMap.size(); ++i) {
 			List<String> head = headMap.get(i);
