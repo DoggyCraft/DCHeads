@@ -144,9 +144,9 @@ public class HeadGUIManager implements Listener
 
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e) {
-		String pageName = e.getInventory().getName();
+		String pageName = e.getView().getTitle();
 		plugin.logDebug("Current inventory: " + pageName);
-		if ((!e.getInventory().getName().contains("DCHeads - Side nr. "))) {
+		if ((!e.getView().getTitle().contains("DCHeads - Side nr. "))) {
 			return;
 		}
 		if (e.getCurrentItem() == null) {

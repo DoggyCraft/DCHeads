@@ -1,7 +1,10 @@
 package dk.doggycraft.dcheads;
 
 import java.util.UUID;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -35,7 +38,7 @@ public class HeadsManager
         plugin.logDebug("Generating Custom Head - Current base64 is: " + headBase64);
         byte[] encodedData = headBase64;
         propertyMap.put("textures", new Property("textures", new String(encodedData)));
-        ItemStack head = new ItemStack(Material.LEGACY_SKULL_ITEM, 1, (short) 3);
+        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
         ItemMeta headMeta = head.getItemMeta();
         Class<?> headMetaClass = headMeta.getClass();
         Reflections.getField(headMetaClass, "profile", GameProfile.class).set(headMeta, profile);
@@ -53,7 +56,7 @@ public class HeadsManager
         }
         plugin.logDebug("Generating Custom Head - Current texture is: " + texture + " Current headname is: " + name);
         propertyMap.put("textures", new Property("textures", texture));
-        ItemStack head = new ItemStack(Material.LEGACY_SKULL_ITEM, 1, (short) 3);
+        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
         ItemMeta headMeta = head.getItemMeta();
         Class<?> headMetaClass = headMeta.getClass();
         Reflections.getField(headMetaClass, "profile", GameProfile.class).set(headMeta, profile);
@@ -66,9 +69,11 @@ public class HeadsManager
 	public ItemStack getPlayerHead(String name, String username)
 	{
         plugin.logDebug("Generating PlayerHead - Current headname is: " + username);
-        ItemStack head = new ItemStack(Material.LEGACY_SKULL_ITEM, 1, (short) 3);
+        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta skullMeta = (SkullMeta) head.getItemMeta();
-        skullMeta.setOwner(username);
+        @SuppressWarnings("deprecation")
+		OfflinePlayer player = Bukkit.getOfflinePlayer(username);
+        skullMeta.setOwningPlayer(player);
         head.setItemMeta(skullMeta);
         ItemMeta headMeta = head.getItemMeta();
         headMeta.setDisplayName(name);
