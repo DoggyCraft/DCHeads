@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
  */
 public final class Reflections {
 
+	@SuppressWarnings("unused")
 	private Heads	plugin	= null;
     // Deduce the net.minecraft.server.v* package
     private static String OBC_PREFIX = Bukkit.getServer().getClass().getPackage().getName();

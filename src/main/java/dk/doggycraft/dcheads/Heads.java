@@ -1,6 +1,5 @@
 package dk.doggycraft.dcheads;
 
-import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -20,6 +19,8 @@ public class Heads extends JavaPlugin
 	private Commands			commands			= null;
 
 	public boolean				debug				= false;
+	
+	private static Heads		plugin;
 
 	public HeadsManager getHeadsManager()
 	{
@@ -48,14 +49,14 @@ public class Heads extends JavaPlugin
 
 	public void log(String message)
 	{
-		Logger.getLogger("minecraft").info("[" + getDescription().getFullName() + "] " + message);
+		plugin.getLogger().info(message);
 	}
 
 	public void logDebug(String message)
 	{
 		if (this.debug)
 		{
-			Logger.getLogger("minecraft").info("[" + getDescription().getFullName() + "] " + message);
+			plugin.getLogger().info(message);
 		}
 	}
 
