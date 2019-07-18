@@ -5,10 +5,13 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Heads extends JavaPlugin
 {
+	public boolean				vaultEnabled		= false;
+	
 	private PermissionsManager	permissionManager	= null;
 	private HeadsManager		headsManager		= null;
 	private FreshCoalAPI		freshCoalAPI		= null;
@@ -97,6 +100,20 @@ public class Heads extends JavaPlugin
 
 	public void onEnable()
 	{
+		PluginManager pm = getServer().getPluginManager();
+
+		// Check for Vault
+		if (pm.getPlugin("Vault") != null)
+		{
+			this.vaultEnabled = true;
+
+			log("Vault detected.");
+		}
+		else
+		{
+			log("Vault not found.");
+		}
+		
 		this.permissionManager = new PermissionsManager(this);
 		this.headsManager = new HeadsManager(this);
 		this.freshCoalAPI = new FreshCoalAPI(this);
